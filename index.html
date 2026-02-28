@@ -59,68 +59,88 @@
             }
         }
 
-        /* --- PANTALLA LOGIN (ADAPTADA AL ESTILO PAWWI) --- */
+        /* --- NUEVO DISEÑO LOGIN (Integrado desde overview.html) --- */
         .login-screen {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100%;
+            width: 100%;
             padding: 20px;
-            background-color: var(--bg-cream);
+            background-color: var(--brand-navy); /* Fondo oscuro para el login */
+            position: absolute;
+            top: 0; left: 0;
             z-index: 100;
         }
 
-        .login-logo {
-            font-size: 40px;
-            margin-bottom: 20px;
-            color: var(--brand-navy);
+        .login-card {
+            width: 100%; max-width: 380px;
+            background-color: var(--bg-cream);
+            border-radius: 32px;
+            padding: 40px 24px;
+            display: flex; flex-direction: column;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            position: relative;
         }
 
-        .login-screen h2 {
-            color: var(--brand-navy);
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 800;
+        .badge-staff {
+            position: absolute; top: -12px;
+            background: var(--brand-pink); color: var(--brand-navy);
+            padding: 6px 16px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: 800; letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .login-input-wrapper {
+        .logo-img { height: 36px; width: auto; margin-bottom: 24px; display: block; }
+
+        .welcome-text { text-align: center; margin-bottom: 24px; color: var(--brand-navy); }
+        .welcome-text h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+        .welcome-text p { color: var(--gray-text); font-size: 0.9rem; }
+
+        .login-form { width: 100%; display: flex; flex-direction: column; gap: 14px; }
+
+        .login-input-box {
+            position: relative;
             background: var(--white);
-            border-radius: 24px;
-            padding: 5px 20px;
-            box-shadow: var(--shadow-soft);
-            margin-bottom: 15px;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex; align-items: center;
+        }
+        
+        .login-input-box:focus-within {
+            border-color: var(--brand-navy);
+            box-shadow: 0 4px 12px rgba(18, 10, 43, 0.08);
+        }
+
+        .input-icon { padding-left: 16px; color: var(--brand-navy); opacity: 0.6; font-size: 20px; }
+
+        .login-input-box input {
+            width: 100%; padding: 16px 16px 16px 10px;
+            background: transparent; border: none; outline: none;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem;
+            color: var(--brand-navy); font-weight: 600;
+        }
+        .login-input-box input::placeholder { color: #9CA3AF; font-weight: 500; }
+
+        .btn-primary {
+            background-color: var(--brand-navy); color: var(--white);
+            border: none; padding: 16px; border-radius: 100px;
+            font-size: 0.95rem; font-weight: 700; cursor: pointer;
+            transition: all 0.2s; margin-top: 16px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
             width: 100%;
-            max-width: 280px;
         }
+        .btn-primary:active { transform: scale(0.96); }
+        .btn-primary:disabled { opacity: 0.5; background-color: #9CA3AF; cursor: not-allowed; }
 
-        .login-screen input {
-            padding: 12px;
-            border: none;
-            width: 100%;
-            text-align: center;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1rem;
-            outline: none;
-            color: var(--brand-navy);
+        .help-link {
+            margin-top: 24px; font-size: 0.8rem; color: var(--gray-text); text-align: center;
         }
-
-        .login-screen button {
-            padding: 14px 40px;
-            border: none;
-            border-radius: 50px;
-            background: var(--brand-navy);
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 10px rgba(18, 10, 43, 0.2);
-        }
-
-        .login-screen button:active {
-            transform: scale(0.95);
-        }
+        .help-link a { color: var(--brand-navy); text-decoration: none; font-weight: 700; }
 
         /* --- HEADER CHAT --- */
         .chat-header {
@@ -206,7 +226,6 @@
         .message { 
             max-width: 85%; padding: 10px 14px; border-radius: var(--radius-bubble); 
             font-size: 0.95rem; line-height: 1.45; position: relative; 
-            /*animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
             word-wrap: break-word;
         }
 
@@ -214,7 +233,6 @@
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
 
-        /* Mensajes recibidos (Soporte) */
         .message.received {
             align-self: flex-start;
             background: var(--white);
@@ -223,7 +241,6 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
-        /* Mensajes enviados (Cliente) */
         .message.sent {
             align-self: flex-end;
             background: var(--brand-navy);
@@ -277,11 +294,9 @@
             margin: 5px 0px;
         }
         .btn-attach:active { background: #e5e7eb; }
-
         
         @keyframes popIn { from { opacity: 0; transform: scale(0.9) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         
-        /* Ocultar elementos */
         .hidden { display: none !important; }
     </style>
 </head>
@@ -290,14 +305,34 @@
     <div class="app-container">
         
         <div class="login-screen" id="loginScreen">
-            <div class="login-logo">
-                <span class="material-symbols-rounded" style="font-size: 60px; color: var(--brand-navy);">pets</span>
+            <div class="login-card">
+                <div class="badge-staff">Pawwer Access</div>
+                
+                <img src="https://pawwi.co/wp-content/uploads/2024/10/LogoPawwi.svg" alt="Pawwi" class="logo-img">
+        
+                <div class="welcome-text">
+                    <h1>¡Hola, Pawwer!</h1>
+                    <p>Ingresa el ID del servicio asignado para conectarte con el tutor.</p>
+                </div>
+        
+                <form class="login-form" id="loginForm" onsubmit="event.preventDefault(); enterChat();">
+        
+                    <div class="login-input-box">
+                        <span class="material-symbols-rounded input-icon">tag</span>
+                        <input type="text" id="chatCode" placeholder="ID de Servicio (ej: PAW-882)" style="text-transform: uppercase;" autocomplete="off" required>
+                    </div>
+        
+                    <button type="submit" class="btn-primary" id="enterBtn" disabled>
+                        Iniciar Servicio
+                        <span class="material-symbols-rounded">play_circle</span>
+                    </button>
+        
+                </form>
+        
+                <div class="help-link">
+                    ¿Problemas con el ID? <a href="#" onclick="alert('Contactando a Soporte Operativo...')">Soporte Operativo</a>
+                </div>
             </div>
-            <h2>Ingresar Código</h2>
-            <div class="login-input-wrapper">
-                <input type="text" id="chatCode" placeholder="Ej: 6993ecf7..." autocomplete="off">
-            </div>
-            <button onclick="enterChat()">Conectar</button>
         </div>
 
         <div id="chatScreen" class="hidden" style="display: flex; flex-direction: column; height: 100%;">
@@ -332,7 +367,7 @@
                     <span class="material-symbols-rounded">lock</span>
                     <p><strong>Chat seguro.</strong> Tu conversación y tu perrito están protegidos por Pawwi.</p>
                 </div>
-                </div>
+            </div>
 
             <div class="input-area">
                 <button class="btn-attach">
@@ -355,7 +390,7 @@
         let chatId = null;
         let interval = null;
         
-        // Elementos DOM
+        // Elementos DOM Globales
         const loginScreen = document.getElementById("loginScreen");
         const chatScreen = document.getElementById("chatScreen");
         const messageContainer = document.getElementById("message-container");
@@ -364,9 +399,22 @@
         const chatIdDisplay = document.getElementById("chatIdDisplay");
         const pawwerName = document.getElementById("pawwerName");
 
-        // --- LÓGICA DE INTERFAZ (UI) ---
+        // Elementos DOM Login
+        const chatCodeInput = document.getElementById("chatCode");
+        const enterBtn = document.getElementById("enterBtn");
 
-        // Ajuste automático de altura del textarea
+        // --- LÓGICA DE INTERFAZ (UI) LOGIN ---
+        chatCodeInput.addEventListener('input', () => {
+            if (chatCodeInput.value.trim().length > 0) {
+                enterBtn.removeAttribute('disabled');
+                enterBtn.style.opacity = "1";
+            } else {
+                enterBtn.setAttribute('disabled', 'true');
+                enterBtn.style.opacity = "0.5";
+            }
+        });
+
+        // --- LÓGICA DE INTERFAZ (UI) CHAT ---
         messageInput.addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = (this.scrollHeight) + 'px';
@@ -378,7 +426,6 @@
             }
         });
 
-        // Enviar con Enter (sin Shift)
         messageInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -390,24 +437,31 @@
 
         // 1. Entrar al chat
         async function enterChat(){
-            const code = document.getElementById("chatCode").value.trim();
+            const code = chatCodeInput.value.trim();
             if(!code){
                 alert("Por favor ingresa un código válido");
                 return;
             }
 
             chatId = code;
+            
+            const originalBtnText = enterBtn.innerHTML;
+            enterBtn.innerHTML = 'Validando... <span class="material-symbols-rounded">hourglass_empty</span>';
+            enterBtn.style.opacity = "0.8";
+            enterBtn.setAttribute('disabled', 'true');
 
             try{
                 const res = await fetch(`${API}/api/chat/${chatId}`);
                 if(!res.ok){
                     alert("Chat no encontrado");
+                    enterBtn.innerHTML = originalBtnText;
+                    enterBtn.removeAttribute('disabled');
+                    enterBtn.style.opacity = "1";
                     return;
                 }
 
                 const chat = await res.json();
 
-                // 🔁 CAMBIO AQUÍ
                 pawwerName.textContent = chat.clienteCode || "Cliente";
 
                 chatIdDisplay.innerHTML = `
@@ -424,11 +478,13 @@
             }catch(error){
                 console.error("Error cargando chat:", error);
                 alert("Error conectando al chat");
+                enterBtn.innerHTML = originalBtnText;
+                enterBtn.removeAttribute('disabled');
+                enterBtn.style.opacity = "1";
             }
         }
 
         // 2. Cargar mensajes
-        // Variable global para rastrear cuántos mensajes hemos pintado
         let renderedMessagesCount = 0;
 
         async function loadMessages(){
@@ -443,25 +499,23 @@
 
                 const messages = await res.json();
                 
-                // Si no hay mensajes nuevos, no hacemos nada (evita parpadeos)
                 if (messages.length <= renderedMessagesCount) return;
 
                 const chatContainer = document.getElementById("message-container");
-                
-                // Obtenemos solo los mensajes que faltan por agregar
                 const newMessages = messages.slice(renderedMessagesCount);
 
                 newMessages.forEach(msg => {
                     const div = document.createElement("div");
                     
-                    // Añadimos clase base + clase de animación
                     div.classList.add("message", "new-message");
 
-                    // Lógica de estilos (Mío vs Otro)
+                    // --- CORRECCIÓN DE LA VISTA INVERTIDA ---
                     if(msg.senderCode.startsWith("CLI")){
-                        div.classList.add("sent");
-                    } else {
+                        // Si el mensaje es del Cliente, lo vemos a la izquierda (recibido)
                         div.classList.add("received");
+                    } else {
+                        // Si el mensaje es nuestro (Empleado/Pawwer), lo vemos a la derecha (enviado)
+                        div.classList.add("sent");
                     }
 
                     const fecha = new Date(msg.creadoEn);
@@ -475,25 +529,23 @@
                     chatContainer.appendChild(div);
                 });
 
-                // Actualizamos el contador
                 renderedMessagesCount = messages.length;
 
-                // Scroll al fondo suavemente
                 chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
 
             }catch(error){
                 console.error("Error cargando mensajes:", error);
             }
         }
+        
         // 3. Enviar mensaje
         async function sendMessage(){
             const text = messageInput.value.trim();
 
             if(!text || !chatId){
-                return; // No alerta intrusiva, simplemente no envía
+                return;
             }
 
-            // Deshabilitar botón temporalmente para evitar doble envío
             sendBtn.classList.add("disabled");
 
             try{
@@ -504,7 +556,8 @@
                     },
                     body:JSON.stringify({
                         chatId: chatId,
-                        senderCode:"CLI001",
+                        // --- CORRECCIÓN: Ahora el mensaje se envía como EMPLEADO (PAW001) ---
+                        senderCode:"PAW001", 
                         texto:text
                     })
                 });
@@ -512,21 +565,16 @@
                 if(!res.ok){
                     const error = await res.text();
                     console.error("Error POST:", res.status, error);
-                    alert("Error enviando mensaje"); // Aquí sí avisamos error
+                    alert("Error enviando mensaje"); 
                     sendBtn.classList.remove("disabled");
                     return;
                 }
 
-                // Éxito: Limpiar input
                 messageInput.value = "";
                 messageInput.style.height = "auto";
                 
-                // Recargar mensajes inmediatamente
                 await loadMessages();
                 
-                // Mantener el botón deshabilitado hasta que escriban de nuevo
-                // (Ya está vacío el input, así que visualmente sigue disabled)
-
             }catch(error){
                 console.error("Error enviando mensaje:", error);
                 sendBtn.classList.remove("disabled");
