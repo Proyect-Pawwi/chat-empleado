@@ -313,7 +313,7 @@
                         <div class="status-dot"></div>
                     </div>
                     <div class="text-info">
-                        <h2>Cliente</h2>
+                        <h2 id="pawwerName">Cargando...</h2>
                         <span class="verified-badge" id="chatIdDisplay">
                             <span class="material-symbols-rounded icon-tiny">tag</span>
                             ID: ...
@@ -362,6 +362,7 @@
         const messageInput = document.getElementById("message-input");
         const sendBtn = document.getElementById("send-btn");
         const chatIdDisplay = document.getElementById("chatIdDisplay");
+        const pawwerName = document.getElementById("pawwerName");
 
         // --- LÓGICA DE INTERFAZ (UI) ---
 
@@ -388,7 +389,7 @@
         // --- LÓGICA DE NEGOCIO (API) ---
 
         // 1. Entrar al chat
-        function enterChat(){
+        async function enterChat(){
             const code = document.getElementById("chatCode").value.trim();
             if(!code){
                 alert("Por favor ingresa un código válido");
@@ -397,15 +398,33 @@
 
             chatId = code;
 
-            // Transición de pantallas
-            loginScreen.classList.add("hidden");
-            chatScreen.classList.remove("hidden");
-            
-            // Actualizar info del header
-            chatIdDisplay.innerHTML = `<span class="material-symbols-rounded icon-tiny">tag</span> ${chatId.substring(0,8)}...`;
+            try{
+                const res = await fetch(`${API}/api/chat/${chatId}`);
+                if(!res.ok){
+                    alert("Chat no encontrado");
+                    return;
+                }
 
-            loadMessages();
-            interval = setInterval(loadMessages, 3000);
+                const chat = await res.json();
+
+                // 🔁 CAMBIO AQUÍ
+                pawwerName.textContent = chat.clienteCode || "Cliente";
+
+                chatIdDisplay.innerHTML = `
+                    <span class="material-symbols-rounded icon-tiny">tag</span>
+                    ${chatId.substring(0,8)}...
+                `;
+
+                loginScreen.classList.add("hidden");
+                chatScreen.classList.remove("hidden");
+
+                loadMessages();
+                interval = setInterval(loadMessages, 3000);
+
+            }catch(error){
+                console.error("Error cargando chat:", error);
+                alert("Error conectando al chat");
+            }
         }
 
         // 2. Cargar mensajes
@@ -439,7 +458,7 @@
                     div.classList.add("message", "new-message");
 
                     // Lógica de estilos (Mío vs Otro)
-                    if(msg.senderCode.startsWith("EMP")){
+                    if(msg.senderCode.startsWith("CLI")){
                         div.classList.add("sent");
                     } else {
                         div.classList.add("received");
@@ -485,7 +504,7 @@
                     },
                     body:JSON.stringify({
                         chatId: chatId,
-                        senderCode:"EMP001",
+                        senderCode:"CLI001",
                         texto:text
                     })
                 });
@@ -513,7 +532,6 @@
                 sendBtn.classList.remove("disabled");
             }
         }
-
     </script>
 
 </body>
