@@ -2,12 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#FFF1EB"> 
-    <title>Pawwi Chat Pawwer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Panel Pawwer - Pawwi</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <style>
         /* --- CSS: PAWWI DESIGN SYSTEM --- */
@@ -15,6 +16,7 @@
             --bg-cream: #FFF1EB;      
             --brand-navy: #120A2B;     
             --brand-pink: #F7AEF1;   
+            --brand-orange: #FF7031; 
             --white: #FFFFFF;
             --gray-light: #F3F4F6;
             --gray-text: #6B7280;
@@ -36,551 +38,548 @@
             overflow: hidden;
         }
 
-        /* CONTENEDOR PRINCIPAL */
-        .app-container {
-            width: 100%;
-            height: 100%;
+        .chat-container-inner {
             display: flex;
             flex-direction: column;
-            position: relative;
-            background-color: var(--bg-cream);
+            height: 100%;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .app-container {
+            width: 100%; height: 100%; display: flex; flex-direction: column;
+            position: relative; background-color: var(--bg-cream); padding: 0; 
         }
 
         /* MEDIA QUERY: DESKTOP */
         @media (min-width: 768px) {
-            body {
-                align-items: center;
-                justify-content: center;
-            }
-            .app-container {
-                height: 100vh;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-                overflow: hidden;
-            }
+            body { align-items: center; justify-content: center; background-color: #e5e7eb; }
+            .app-container { height: 100vh; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; }
         }
 
-        /* --- NUEVO DISEÑO LOGIN (Integrado desde overview.html) --- */
+        /* --- PANTALLA LOGIN --- */
         .login-screen {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-            padding: 20px;
-            background-color: var(--brand-navy); /* Fondo oscuro para el login */
-            position: absolute;
-            top: 0; left: 0;
-            z-index: 100;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 100%; padding: 20px; background-color: var(--brand-navy); 
+            background-size: 20px 20px; z-index: 100;
         }
 
         .login-card {
-            width: 100%; max-width: 380px;
-            background-color: var(--bg-cream);
-            border-radius: 32px;
-            padding: 40px 24px;
-            display: flex; flex-direction: column;
-            align-items: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            position: relative;
+            width: 100%; max-width: 380px; background-color: var(--bg-cream); border-radius: 32px;
+            padding: 40px 24px; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 20px 50px rgba(18, 10, 43, 0.4); position: relative;
         }
 
-        .badge-staff {
-            position: absolute; top: -12px;
-            background: var(--brand-pink); color: var(--brand-navy);
-            padding: 6px 16px; border-radius: 20px;
-            font-size: 0.75rem; font-weight: 800; letter-spacing: 0.5px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .logo-img { height: 36px; width: auto; margin-bottom: 24px; display: block; }
+        .logo-img { height: 40px; width: auto; margin-bottom: 24px; display: block; }
 
         .welcome-text { text-align: center; margin-bottom: 24px; color: var(--brand-navy); }
-        .welcome-text h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
-        .welcome-text p { color: var(--gray-text); font-size: 0.9rem; }
+        .welcome-text h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .welcome-text p { color: var(--gray-text); font-size: 0.95rem; line-height: 1.4; }
 
         .login-form { width: 100%; display: flex; flex-direction: column; gap: 14px; }
 
-        .login-input-box {
-            position: relative;
-            background: var(--white);
-            border-radius: 16px;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(0,0,0,0.05);
-            display: flex; align-items: center;
+        .login-card .input-wrapper {
+            position: relative; background: var(--white); border-radius: 16px; transition: all 0.2s ease;
+            border: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; padding: 0; min-height: auto;
         }
-        
-        .login-input-box:focus-within {
-            border-color: var(--brand-navy);
-            box-shadow: 0 4px 12px rgba(18, 10, 43, 0.08);
-        }
+        .login-card .input-wrapper:focus-within { border-color: var(--brand-orange); box-shadow: 0 4px 12px rgba(255, 112, 49, 0.15); }
+        .input-icon { padding-left: 16px; color: var(--brand-navy); opacity: 0.5; font-size: 20px; }
 
-        .input-icon { padding-left: 16px; color: var(--brand-navy); opacity: 0.6; font-size: 20px; }
-
-        .login-input-box input {
-            width: 100%; padding: 16px 16px 16px 10px;
-            background: transparent; border: none; outline: none;
-            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem;
-            color: var(--brand-navy); font-weight: 600;
+        .login-card input {
+            width: 100%; padding: 16px 16px 16px 10px; background: transparent; border: none; outline: none;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; color: var(--brand-navy); font-weight: 600; text-align: left; 
         }
-        .login-input-box input::placeholder { color: #9CA3AF; font-weight: 500; }
+        .login-card input::placeholder { color: #9CA3AF; font-weight: 500; text-transform: none; }
 
         .btn-primary {
-            background-color: var(--brand-navy); color: var(--white);
-            border: none; padding: 16px; border-radius: 100px;
-            font-size: 0.95rem; font-weight: 700; cursor: pointer;
-            transition: all 0.2s; margin-top: 16px;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            width: 100%;
+            background-color: var(--brand-navy); color: var(--white); border: none; padding: 16px; border-radius: 100px;
+            font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 16px;
+            display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; box-shadow: 0 8px 20px rgba(18, 10, 43, 0.15);
         }
         .btn-primary:active { transform: scale(0.96); }
-        .btn-primary:disabled { opacity: 0.5; background-color: #9CA3AF; cursor: not-allowed; }
+        .btn-primary:disabled { opacity: 0.5; background-color: #A0A0A0; cursor: not-allowed; box-shadow: none; }
 
-        .help-link {
-            margin-top: 24px; font-size: 0.8rem; color: var(--gray-text); text-align: center;
-        }
-        .help-link a { color: var(--brand-navy); text-decoration: none; font-weight: 700; }
+        .footer-text { margin-top: 32px; font-size: 0.75rem; color: var(--gray-text); opacity: 0.8; display: flex; align-items: center; gap: 6px; font-weight: 600; }
+        .footer-text b { color: var(--brand-navy); font-weight:900; font-size:larger; }
 
         /* --- HEADER CHAT --- */
         .chat-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: max(12px, env(safe-area-inset-top)) 16px 12px 16px;
-            display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            z-index: 20;
-            box-shadow: var(--shadow-soft);
-            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            padding: max(12px, env(safe-area-inset-top)) 16px 12px 16px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 20; box-shadow: var(--shadow-soft); flex-shrink: 0;
+            padding-top: env(safe-area-inset-top) !important;
         }
 
         .header-left { display: flex; align-items: center; gap: 8px; flex: 1; overflow: hidden; }
-
-        .btn-back { 
-            background: none; border: none; cursor: pointer; color: var(--brand-navy); 
-            display: flex; align-items: center; justify-content: center; padding: 8px;
-            margin-left: -8px; 
-        }
-
+        .btn-back { background: none; border: none; cursor: pointer; color: var(--brand-navy); display: flex; align-items: center; justify-content: center; padding: 8px; margin-left: -8px; }
         .avatar-container { position: relative; width: 40px; height: 40px; flex-shrink: 0; }
-        .avatar-container img { 
-            width: 100%; height: 100%; border-radius: 50%; 
-            background-color: var(--bg-cream);
-            border: 2px solid var(--white); 
-        }
-        .status-dot {
-            width: 10px; height: 10px; background: var(--green-success); border: 2px solid var(--white);
-            border-radius: 50%; position: absolute; bottom: 0; right: 0;
-        }
-
-        .text-info { display: flex; flex-direction: column; overflow: hidden; margin-left: 4px; }
-        .text-info h2 { 
-            font-size: 0.95rem; color: var(--brand-navy); font-weight: 700; line-height: 1.2; 
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
+        .avatar-container img { width: 100%; height: 100%; border-radius: 50%; background-color: var(--bg-cream); border: 2px solid var(--white); }
+        .status-dot { width: 10px; height: 10px; background: var(--green-success); border: 2px solid var(--white); border-radius: 50%; position: absolute; bottom: 0; right: 0; }
         
-        .verified-badge { 
-            display: flex; align-items: center; gap: 3px; 
-            font-size: 0.7rem; color: var(--brand-navy); opacity: 0.7; font-weight: 600; 
-            margin-top: 2px;
-        }
+        .text-info { display: flex; flex-direction: column; overflow: hidden; margin-left: 4px; }
+        .text-info h2 { font-size: 0.95rem; color: var(--brand-navy); font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .verified-badge { display: flex; align-items: center; gap: 3px; font-size: 0.7rem; color: var(--brand-navy); opacity: 0.7; font-weight: 600; margin-top: 2px; }
         .icon-tiny { font-size: 14px; color: var(--brand-navy); }
 
         .btn-support {
-            background-color: rgba(18, 10, 43, 0.05);
-            color: var(--brand-navy);
-            border: 1px solid rgba(18, 10, 43, 0.1);
-            padding: 6px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: flex; align-items: center; gap: 6px;
-            cursor: pointer;
-            transition: transform 0.1s;
-            white-space: nowrap;
+            background-color: rgba(18, 10, 43, 0.05); color: var(--brand-navy); border: 1px solid rgba(18, 10, 43, 0.1);
+            padding: 6px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: transform 0.1s; white-space: nowrap;
         }
         .btn-support:active { transform: scale(0.95); background: rgba(18, 10, 43, 0.1); }
 
         /* --- ÁREA DE CHAT --- */
         .chat-area {
-            flex: 1; 
-            padding: 16px; 
-            overflow-y: auto; 
-            display: flex; flex-direction: column; gap: 12px;
-            background-image: radial-gradient(var(--brand-pink) 1px, transparent 1px);
-            background-size: 24px 24px;
-            background-color: var(--bg-cream);
-            overscroll-behavior-y: contain;
-            -webkit-overflow-scrolling: touch;
+            flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
+            background-image: radial-gradient(var(--brand-pink) 1px, transparent 1px); background-size: 24px 24px;
+            background-color: var(--bg-cream); overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch;
         }
 
         .system-message {
-            background: rgba(247, 174, 241, 0.15); 
-            border: 1px dashed var(--brand-pink);
-            border-radius: 12px; padding: 12px; margin-bottom: 10px;
-            display: flex; gap: 10px; align-items: flex-start;
-            color: var(--brand-navy); font-size: 0.8rem; line-height: 1.4;
+            background: rgba(247, 174, 241, 0.15); border: 1px dashed var(--brand-pink); border-radius: 12px; padding: 12px; margin-bottom: 10px;
+            display: flex; gap: 10px; align-items: flex-start; color: var(--brand-navy); font-size: 0.8rem; line-height: 1.4;
         }
-        .system-message .material-symbols-rounded { font-size: 18px; color: var(--brand-navy); margin-top: 2px; flex-shrink: 0; }
+        .system-message .material-symbols-rounded { font-size: 18px; color: var(--brand-navy); margin-top: 2px; flex-shrink: 0; margin-bottom: 7px; }
 
-        .message { 
-            max-width: 85%; padding: 10px 14px; border-radius: var(--radius-bubble); 
-            font-size: 0.95rem; line-height: 1.45; position: relative; 
-            word-wrap: break-word;
-        }
+        .message { max-width: 85%; padding: 10px 14px; border-radius: var(--radius-bubble); font-size: 0.95rem; line-height: 1.45; position: relative; word-wrap: break-word; }
+        .new-message { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-        .new-message {
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-        }
+        .message.received { align-self: flex-start; background: var(--white); color: var(--brand-navy); border-bottom-left-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .message.sent { align-self: flex-end; background: var(--brand-navy); color: var(--white); border-bottom-right-radius: 4px; box-shadow: 0 2px 8px rgba(18, 10, 43, 0.15); }
+        .message-time { display: block; font-size: 0.65rem; margin-top: 4px; opacity: 0.7; text-align: right; }
 
-        .message.received {
-            align-self: flex-start;
-            background: var(--white);
-            color: var(--brand-navy);
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
+        /* --- INPUT AREA DEL CHAT --- */
+        .input-container-wrapper { display: flex; flex-direction: column; flex-shrink: 0; z-index: 20; background: var(--white); border-top: 1px solid rgba(0,0,0,0.05); }
 
-        .message.sent {
-            align-self: flex-end;
-            background: var(--brand-navy);
-            color: var(--white);
-            border-bottom-right-radius: 4px;
-            box-shadow: 0 2px 8px rgba(18, 10, 43, 0.15);
-        }
+        .input-area { background: var(--white); padding: 12px 16px; padding-bottom: 12px !important; display: flex; align-items: flex-end; gap: 8px; border-top: none; flex-shrink: 0; z-index: 20; }
+        .input-area .input-wrapper { flex: 1; background: var(--gray-light); border-radius: 24px; padding: 8px 16px; display: flex; align-items: center; min-height: 44px; }
 
-        .message-time {
-            display: block; font-size: 0.65rem; margin-top: 4px; opacity: 0.7; text-align: right;
-        }
+        textarea { width: 100%; background: transparent; border: none; outline: none; font-family: 'Plus Jakarta Sans', sans-serif; resize: none; font-size: 1rem; line-height: 1.4; max-height: 100px; padding: 10px 0; color: var(--brand-navy); }
 
-        /* --- INPUT AREA --- */
-        .input-area {
-            background: var(--white); 
-            padding: 12px 16px;
-            padding-bottom: max(12px, env(safe-area-inset-bottom));
-            display: flex; align-items: flex-end; gap: 8px;
-            border-top: 1px solid rgba(0,0,0,0.05);
-            flex-shrink: 0;
-            z-index: 20;
-        }
-
-        .input-wrapper {
-            flex: 1; background: var(--gray-light); border-radius: 24px;
-            padding: 8px 16px; display: flex; align-items: center;
-            min-height: 44px;
-        }
-
-        textarea {
-            width: 100%; background: transparent; border: none; outline: none;
-            font-family: 'Plus Jakarta Sans', sans-serif; resize: none;
-            font-size: 1rem;
-            line-height: 1.4; max-height: 100px;
-            padding: 10px 0; color: var(--brand-navy);
-        }
-
-        .btn-send {
-            background: var(--brand-navy); color: var(--white);
-            width: 44px; height: 44px; border-radius: 50%; border: none;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 0.2s; flex-shrink: 0;
-        }
+        .btn-send { background: var(--brand-navy); color: var(--white); width: 44px; height: 44px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; flex-shrink: 0; }
         .btn-send:active { transform: scale(0.9); }
         .btn-send.disabled { opacity: 0.5; cursor: default; }
 
-        .btn-attach { 
-            background: var(--gray-light); border: none; color: var(--gray-text); 
-            cursor: pointer; width: 44px; height: 44px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-            margin: 5px 0px;
-        }
+        .btn-attach { background: var(--gray-light); border: none; color: var(--gray-text); cursor: pointer; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin: 5px 0px; }
         .btn-attach:active { background: #e5e7eb; }
-        
+
         @keyframes popIn { from { opacity: 0; transform: scale(0.9) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         
         .hidden { display: none !important; }
+
+        /* --- ESTILOS PARA IMÁGENES EN EL CHAT --- */
+        .message-image-content { max-width: 100%; border-radius: 12px; margin-bottom: 6px; display: block; object-fit: cover; }
+        .image-preview-area { padding: 12px 16px 0px 16px; display: flex; }
+        .preview-box { position: relative; width: 80px; height: 80px; border-radius: 12px; box-shadow: var(--shadow-soft); border: 2px solid var(--brand-orange); }
+        .preview-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+        .btn-remove-image { position: absolute; top: -8px; right: -8px; background: var(--brand-navy); color: var(--white); border: none; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .btn-remove-image span { font-size: 16px; }
+
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <div class="login-screen" id="loginScreen">
-            <div class="login-card">
-                <div class="badge-staff">Pawwer Access</div>
-                
-                <img src="https://pawwi.co/wp-content/uploads/2024/10/LogoPawwi.svg" alt="Pawwi" class="logo-img">
-        
-                <div class="welcome-text">
-                    <h1>¡Hola, Pawwer!</h1>
-                    <p>Ingresa el ID del servicio asignado para conectarte con el tutor.</p>
+<div class="app-container">
+    
+    <div id="login-screen" class="login-screen">
+        <div class="login-card">
+            <img src="https://pawwi.co/wp-content/uploads/2024/10/LogoPawwi.svg" alt="Pawwi" class="logo-img">
+    
+            <div class="welcome-text">
+                <h1>Panel Pawwer</h1>
+                <p>Ingresa al chat para actualizar al dueño sobre su peludo 🐶</p>
+            </div>
+    
+            <form id="login-form" class="login-form">
+                <div class="input-wrapper">
+                    <span class="material-symbols-rounded input-icon">tag</span>
+                    <input type="text" id="chatCodeInput" placeholder="ID del Chat (ej: PAW-882)" style="text-transform: uppercase;" required autocomplete="off">
                 </div>
-        
-                <form class="login-form" id="loginForm" onsubmit="event.preventDefault(); enterChat();">
-        
-                    <div class="login-input-box">
-                        <span class="material-symbols-rounded input-icon">tag</span>
-                        <input type="text" id="chatCode" placeholder="ID de Servicio (ej: PAW-882)" style="text-transform: uppercase;" autocomplete="off" required>
-                    </div>
-        
-                    <button type="submit" class="btn-primary" id="enterBtn" disabled>
-                        Iniciar Servicio
-                        <span class="material-symbols-rounded">play_circle</span>
-                    </button>
-        
-                </form>
-        
-                <div class="help-link">
-                    ¿Problemas con el ID? <a href="#" onclick="alert('Contactando a Soporte Operativo...')">Soporte Operativo</a>
+    
+                <button type="submit" id="enterBtn" class="btn-primary" disabled>
+                    Entrar al Chat
+                    <span class="material-symbols-rounded">arrow_forward</span>
+                </button>
+            </form>
+    
+            <p class="footer-text">
+                ¿Problemas con el ID? <b>Soporte Operativo</b>
+            </p>
+        </div>
+    </div>
+
+    <div id="chat-container-inner" class="chat-container-inner hidden">
+        <header class="chat-header">
+            <div class="header-left">
+                <button class="btn-back" id="leaveBtn">
+                    <span class="material-symbols-rounded">arrow_back</span>
+                </button>
+                
+                <div class="avatar-container">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=CamilaPawwer&backgroundColor=FFF1EB&clothing=blazerAndShirt" alt="Avatar">
+                    <div class="status-dot"></div>
+                </div>
+                <div class="text-info">
+                    <h2 id="clientNameDisplay">Cargando...</h2>
+                    <span class="verified-badge">
+                        <span class="material-symbols-rounded icon-tiny">tag</span>
+                        ID: <span id="chatIdDisplay"></span>...
+                    </span>
                 </div>
             </div>
+
+            <button class="btn-support" id="btnSupport">
+                <span class="material-symbols-rounded">support_agent</span>
+                Ayuda
+            </button>
+        </header>
+
+        <div class="chat-area" id="chat-area">
+            <div class="system-message">
+                <span class="material-symbols-rounded">lock</span>
+                <p><strong>Chat seguro.</strong> Tu conversación y tu perrito están protegidos por Pawwi.</p>
+            </div>
+            
+            <div id="messages-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
         </div>
 
-        <div id="chatScreen" class="hidden" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="input-container-wrapper">
             
-            <header class="chat-header">
-                <div class="header-left">
-                    <button class="btn-back" onclick="location.reload()">
-                        <span class="material-symbols-rounded">arrow_back</span>
+            <div id="image-preview-area" class="image-preview-area hidden">
+                <div class="preview-box">
+                    <img id="previewImg" src="" alt="Previsualización">
+                    <button class="btn-remove-image" id="removeImageBtn">
+                        <span class="material-symbols-rounded">close</span>
                     </button>
-                    
-                    <div class="avatar-container">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=CamilaPawwer&backgroundColor=FFF1EB&clothing=blazerAndShirt" alt="Avatar">
-                        <div class="status-dot"></div>
-                    </div>
-                    <div class="text-info">
-                        <h2 id="pawwerName">Cargando...</h2>
-                        <span class="verified-badge" id="chatIdDisplay">
-                            <span class="material-symbols-rounded icon-tiny">tag</span>
-                            ID: ...
-                        </span>
-                    </div>
-                </div>
-
-                <button class="btn-support">
-                    <span class="material-symbols-rounded">support_agent</span>
-                    Ayuda
-                </button>
-            </header>
-
-            <div class="chat-area" id="message-container">
-                <div class="system-message">
-                    <span class="material-symbols-rounded">lock</span>
-                    <p><strong>Chat seguro.</strong> Tu conversación y tu perrito están protegidos por Pawwi.</p>
                 </div>
             </div>
 
             <div class="input-area">
-                <button class="btn-attach">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                
+                <button class="btn-attach" id="attachBtn">
                     <span class="material-symbols-rounded">add_photo_alternate</span>
                 </button>
+                
                 <div class="input-wrapper">
-                    <textarea id="message-input" placeholder="Escribe un mensaje..." rows="1"></textarea>
+                    <textarea id="messageInput" placeholder="Escribe un mensaje..." rows="1"></textarea>
                 </div>
-                <button class="btn-send disabled" id="send-btn" onclick="sendMessage()">
+                
+                <button id="sendBtn" class="btn-send disabled">
                     <span class="material-symbols-rounded">send</span>
                 </button>
             </div>
-
         </div>
-
     </div>
 
-    <script>
-        const API = "https://backendpawwi-production.up.railway.app";
-        let chatId = null;
-        let interval = null;
-        
-        // Elementos DOM Globales
-        const loginScreen = document.getElementById("loginScreen");
-        const chatScreen = document.getElementById("chatScreen");
-        const messageContainer = document.getElementById("message-container");
-        const messageInput = document.getElementById("message-input");
-        const sendBtn = document.getElementById("send-btn");
-        const chatIdDisplay = document.getElementById("chatIdDisplay");
-        const pawwerName = document.getElementById("pawwerName");
+</div>
 
-        // Elementos DOM Login
-        const chatCodeInput = document.getElementById("chatCode");
-        const enterBtn = document.getElementById("enterBtn");
+<script>
+    const API = 'https://backendpawwi-production.up.railway.app';
+    
+    // Estado
+    let isChatActive = false;
+    let chatId = null;
+    let clientName = 'Cargando...';
+    let messages = [];
+    let chatInterval = null;
+    let isSending = false;
+    let selectedImage = null; 
+    let messageInputValue = '';
 
-        // --- LÓGICA DE INTERFAZ (UI) LOGIN ---
-        chatCodeInput.addEventListener('input', () => {
-            if (chatCodeInput.value.trim().length > 0) {
-                enterBtn.removeAttribute('disabled');
-                enterBtn.style.opacity = "1";
-            } else {
-                enterBtn.setAttribute('disabled', 'true');
-                enterBtn.style.opacity = "0.5";
-            }
-        });
+    // Elementos DOM
+    const loginScreen = document.getElementById('login-screen');
+    const chatScreen = document.getElementById('chat-container-inner');
+    const chatCodeInput = document.getElementById('chatCodeInput');
+    const loginForm = document.getElementById('login-form');
+    const enterBtn = document.getElementById('enterBtn');
+    
+    const leaveBtn = document.getElementById('leaveBtn');
+    const btnSupport = document.getElementById('btnSupport'); // Nuevo selector de soporte
+    const clientNameDisplay = document.getElementById('clientNameDisplay');
+    const chatIdDisplay = document.getElementById('chatIdDisplay');
+    const chatArea = document.getElementById('chat-area');
+    const messagesList = document.getElementById('messages-list');
+    
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const fileInput = document.getElementById('fileInput');
+    const attachBtn = document.getElementById('attachBtn');
+    
+    const imagePreviewArea = document.getElementById('image-preview-area');
+    const previewImg = document.getElementById('previewImg');
+    const removeImageBtn = document.getElementById('removeImageBtn');
 
-        // --- LÓGICA DE INTERFAZ (UI) CHAT ---
-        messageInput.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-            
-            if(this.value.trim() === '') {
-                sendBtn.classList.add('disabled');
-            } else {
-                sendBtn.classList.remove('disabled');
-            }
-        });
+    // Inicializar Eventos
+    chatCodeInput.addEventListener('input', () => {
+        enterBtn.disabled = chatCodeInput.value.trim().length === 0;
+    });
 
-        messageInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await enterChat();
+    });
 
-        // --- LÓGICA DE NEGOCIO (API) ---
+    leaveBtn.addEventListener('click', leaveChat);
+    
+    // --- NUEVO EVENTO: Botón de Soporte ---
+    btnSupport.addEventListener('click', () => {
+        const numeroSoporte = '573332885462';
+        const mensaje = 'Hola, necesito ayuda Pawwi desde el Panel Pawwer.';
+        window.open(`https://wa.me/${numeroSoporte}?text=${encodeURIComponent(mensaje)}`, '_blank');
+    });
 
-        // 1. Entrar al chat
-        async function enterChat(){
-            const code = chatCodeInput.value.trim();
-            if(!code){
-                alert("Por favor ingresa un código válido");
+    messageInput.addEventListener('input', updateSendButtonState);
+    
+    messageInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    sendBtn.addEventListener('click', () => sendMessage()); // Ajustado para evitar pasar el evento como parametro accidentalmente
+    
+    attachBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', onFileSelected);
+
+    removeImageBtn.addEventListener('click', removeImage);
+
+    // Funciones
+    async function enterChat() {
+        const code = chatCodeInput.value.trim();
+        if (!code) {
+            alert("Por favor ingresa un código válido");
+            return;
+        }
+
+        chatId = code.toUpperCase();
+
+        try {
+            const res = await fetch(`${API}/api/chat/${chatId}`);
+            if (!res.ok) {
+                alert("Chat no encontrado");
                 return;
             }
 
-            chatId = code;
+            const chat = await res.json();
+            clientName = chat.clienteCode || "Cliente";
             
-            const originalBtnText = enterBtn.innerHTML;
-            enterBtn.innerHTML = 'Validando... <span class="material-symbols-rounded">hourglass_empty</span>';
-            enterBtn.style.opacity = "0.8";
-            enterBtn.setAttribute('disabled', 'true');
+            clientNameDisplay.textContent = clientName;
+            chatIdDisplay.textContent = chatId.substring(0, 8);
+            
+            toggleScreens(true);
+            
+            await loadMessages();
+            chatInterval = setInterval(() => loadMessages(), 3000);
 
-            try{
-                const res = await fetch(`${API}/api/chat/${chatId}`);
-                if(!res.ok){
-                    alert("Chat no encontrado");
-                    enterBtn.innerHTML = originalBtnText;
-                    enterBtn.removeAttribute('disabled');
-                    enterBtn.style.opacity = "1";
-                    return;
-                }
-
-                const chat = await res.json();
-
-                pawwerName.textContent = chat.clienteCode || "Cliente";
-
-                chatIdDisplay.innerHTML = `
-                    <span class="material-symbols-rounded icon-tiny">tag</span>
-                    ${chatId.substring(0,8)}...
-                `;
-
-                loginScreen.classList.add("hidden");
-                chatScreen.classList.remove("hidden");
-
-                loadMessages();
-                interval = setInterval(loadMessages, 3000);
-
-            }catch(error){
-                console.error("Error cargando chat:", error);
-                alert("Error conectando al chat");
-                enterBtn.innerHTML = originalBtnText;
-                enterBtn.removeAttribute('disabled');
-                enterBtn.style.opacity = "1";
-            }
+        } catch (error) {
+            console.error("Error cargando chat:", error);
+            alert("Error conectando al chat");
         }
+    }
 
-        // 2. Cargar mensajes
-        let renderedMessagesCount = 0;
+    async function loadMessages() {
+        if (!chatId) return;
 
-        async function loadMessages(){
-            if(!chatId) return;
+        try {
+            const res = await fetch(`${API}/api/messages/${chatId}`);
+            if (!res.ok) return;
 
-            try{
-                const res = await fetch(`${API}/api/messages/${chatId}`);
-                if(!res.ok){
-                    console.error("Error GET:", res.status);
-                    return;
-                }
-
-                const messages = await res.json();
-                
-                if (messages.length <= renderedMessagesCount) return;
-
-                const chatContainer = document.getElementById("message-container");
-                const newMessages = messages.slice(renderedMessagesCount);
-
-                newMessages.forEach(msg => {
-                    const div = document.createElement("div");
-                    
-                    div.classList.add("message", "new-message");
-
-                    // --- CORRECCIÓN DE LA VISTA INVERTIDA ---
-                    if(msg.senderCode.startsWith("CLI")){
-                        // Si el mensaje es del Cliente, lo vemos a la izquierda (recibido)
-                        div.classList.add("received");
-                    } else {
-                        // Si el mensaje es nuestro (Empleado/Pawwer), lo vemos a la derecha (enviado)
-                        div.classList.add("sent");
-                    }
-
-                    const fecha = new Date(msg.creadoEn);
-                    const hora = fecha.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-                    div.innerHTML = `
-                        ${msg.texto}
-                        <span class="message-time">${hora}</span>
-                    `;
-
-                    chatContainer.appendChild(div);
-                });
-
-                renderedMessagesCount = messages.length;
-
-                chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
-
-            }catch(error){
-                console.error("Error cargando mensajes:", error);
+            const newMessages = await res.json();
+            
+            if (newMessages.length > messages.length) {
+                messages = newMessages;
+                renderMessages();
+                scrollToBottom();
             }
+        } catch (error) {
+            console.error("Error cargando mensajes:", error);
         }
+    }
+
+    function renderMessages() {
+        messagesList.innerHTML = ''; 
         
-        // 3. Enviar mensaje
-        async function sendMessage(){
-            const text = messageInput.value.trim();
-
-            if(!text || !chatId){
-                return;
+        messages.forEach(msg => {
+            const isClient = msg.senderCode.startsWith('CLI');
+            
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message new-message ${isClient ? 'received' : 'sent'}`;
+            
+            if (isImage(msg.texto)) {
+                const img = document.createElement('img');
+                img.src = msg.texto;
+                img.className = 'message-image-content';
+                img.style.maxWidth = '100%';
+                img.style.borderRadius = '10px';
+                img.style.display = 'block';
+                msgDiv.appendChild(img);
+            } else {
+                const span = document.createElement('span');
+                span.textContent = msg.texto;
+                msgDiv.appendChild(span);
             }
+            
+            const timeSpan = document.createElement('span');
+            timeSpan.className = 'message-time';
+            
+            const date = new Date(msg.creadoEn);
+            timeSpan.textContent = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            msgDiv.appendChild(timeSpan);
+            messagesList.appendChild(msgDiv);
+        });
+    }
 
-            sendBtn.classList.add("disabled");
+    function isImage(text) {
+        if (!text || typeof text !== 'string') return false;
+        const cleanText = text.trim();
+        return cleanText.startsWith('data:image/') || cleanText.startsWith('data:application/octet-stream');
+    }
 
-            try{
-                const res = await fetch(`${API}/api/messages/create`,{
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body:JSON.stringify({
-                        chatId: chatId,
-                        // --- CORRECCIÓN: Ahora el mensaje se envía como EMPLEADO (PAW001) ---
-                        senderCode:"PAW001", 
-                        texto:text
-                    })
-                });
+    async function onFileSelected(event) {
+        const file = event.target.files[0];
+        if (!file) return;
 
-                if(!res.ok){
-                    const error = await res.text();
-                    console.error("Error POST:", res.status, error);
-                    alert("Error enviando mensaje"); 
-                    sendBtn.classList.remove("disabled");
-                    return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target.result;
+
+            img.onload = async () => {
+                const MAX_SIZE = 1080; 
+                let width = img.width;
+                let height = img.height;
+                const scale = Math.min(MAX_SIZE / width, MAX_SIZE / height, 1);
+                width *= scale;
+                height *= scale;
+
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d', { alpha: false });
+
+                if (ctx) {
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect(0, 0, width, height);
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(img, 0, 0, width, height);
                 }
 
-                messageInput.value = "";
-                messageInput.style.height = "auto";
+                messageInputValue = canvas.toDataURL('image/webp', 0.55);
                 
+                await sendMessage(true); 
+                
+                if (event.target) event.target.value = '';
+            };
+        };
+        reader.readAsDataURL(file);
+    }
+
+    async function sendMessage(isImageUpload = false) {
+        let textToSend = isImageUpload ? messageInputValue : messageInput.value.trim();
+        
+        if (!textToSend || !chatId || isSending) return;
+
+        // --- NUEVA LÓGICA: Validaciones de Correo y Teléfono ---
+        if (!isImageUpload && !isImage(textToSend)) {
+            const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+            const phoneRegex = /(?:\d[\s-]*){5,}/;
+
+            if (emailRegex.test(textToSend)) {
+                alert("No se puede realizar esta acción: No está permitido enviar correos electrónicos.");
+                return; 
+            }
+            if (phoneRegex.test(textToSend)) {
+                alert("No se puede realizar esta acción: No está permitido enviar números de teléfono.");
+                return; 
+            }
+        }
+
+        isSending = true;
+        updateSendButtonState();
+
+        try {
+            const res = await fetch(`${API}/api/messages/create`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chatId: chatId,
+                    senderCode: "PAW001", // Mantenemos el senderCode del Pawwer
+                    texto: textToSend 
+                })
+            });
+
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error("Error del servidor:", errorText);
+                alert("Error al enviar la imagen. Puede que sea demasiado grande para el servidor.");
+            } else {
+                console.log("Mensaje/Imagen enviado con éxito al servidor");
+                if (!isImageUpload) {
+                    messageInput.value = ""; 
+                }
+                messageInputValue = "";
+                removeImage(); 
+                updateSendButtonState();
                 await loadMessages();
-                
-            }catch(error){
-                console.error("Error enviando mensaje:", error);
-                sendBtn.classList.remove("disabled");
             }
+
+        } catch (error) {
+            console.error("Error de red enviando:", error);
+        } finally {
+            isSending = false;
+            updateSendButtonState();
         }
-    </script>
+    }
+
+    function removeImage() {
+        selectedImage = null;
+        imagePreviewArea.classList.add('hidden');
+        previewImg.src = '';
+        updateSendButtonState();
+    }
+
+    function leaveChat() {
+        isChatActive = false;
+        chatId = null;
+        messages = [];
+        messagesList.innerHTML = '';
+        if (chatInterval) clearInterval(chatInterval);
+        toggleScreens(false);
+    }
+
+    function scrollToBottom() {
+        setTimeout(() => {
+            if (chatArea) chatArea.scrollTo({ top: chatArea.scrollHeight, behavior: 'smooth' });
+        }, 100);
+    }
+
+    function toggleScreens(showChat) {
+        if (showChat) {
+            loginScreen.classList.add('hidden');
+            chatScreen.classList.remove('hidden');
+        } else {
+            loginScreen.classList.remove('hidden');
+            chatScreen.classList.add('hidden');
+            chatCodeInput.value = '';
+            enterBtn.disabled = true;
+        }
+    }
+
+    function updateSendButtonState() {
+        const textEmpty = messageInput.value.trim() === '';
+        if ((textEmpty && !selectedImage) || isSending) {
+            sendBtn.classList.add('disabled');
+        } else {
+            sendBtn.classList.remove('disabled');
+        }
+    }
+
+</script>
 
 </body>
 </html>
