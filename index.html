@@ -448,13 +448,12 @@
             const img = new Image();
             img.src = e.target.result;
 
+            // Dentro de img.onload en tu index.html
             img.onload = async () => {
-                // 1. Aumentamos el límite de resolución (e.g., de 1080 a 1920 para Full HD)
                 const MAX_SIZE = 1920; 
                 let width = img.width;
                 let height = img.height;
                 
-                // Calculamos la escala manteniendo la proporción
                 const scale = Math.min(MAX_SIZE / width, MAX_SIZE / height, 1);
                 width *= scale;
                 height *= scale;
@@ -463,20 +462,19 @@
                 canvas.width = width;
                 canvas.height = height;
                 
-                // Optimizamos el contexto para mejor renderizado
                 const ctx = canvas.getContext('2d', { alpha: false });
 
                 if (ctx) {
                     ctx.fillStyle = '#FFFFFF';
                     ctx.fillRect(0, 0, width, height);
                     ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high'; // Asegura máxima nitidez al escalar
+                    ctx.imageSmoothingQuality = 'high';
                     ctx.drawImage(img, 0, 0, width, height);
                 }
 
-                // 2. Ajustamos calidad y formato
-                // Cambiar 0.55 por un valor más alto (0.7 - 0.8) mejora notablemente el detalle
-                messageInputValue = canvas.toDataURL('image/jpeg', 0.75); 
+                // CAMBIO CLAVE: Usar image/webp en lugar de jpeg
+                // WebP a 0.7 es visualmente idéntico a un JPEG a 0.85 pero pesa la mitad.
+                messageInputValue = canvas.toDataURL('image/webp', 0.7); 
                 
                 await sendMessage(true); 
                 
