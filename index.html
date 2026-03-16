@@ -448,33 +448,58 @@
             const img = new Image();
             img.src = e.target.result;
 
-            // Dentro de img.onload en tu index.html
             img.onload = async () => {
-                const MAX_SIZE = 1920; 
-                let width = img.width;
-                let height = img.height;
+                // 1. Configuración agresiva desde el inicio
+                let currentMaxSize = 800; // Reducimos drásticamente a 800px máximo
+                let currentQuality = 0.6; // Calidad al 60%
                 
-                const scale = Math.min(MAX_SIZE / width, MAX_SIZE / height, 1);
-                width *= scale;
-                height *= scale;
+                // Un string base64 de 500,000 caracteres equivale a ~375 KB. 
+                // Esto es extremadamente seguro para casi cualquier servidor.
+                const TARGET_BASE64_LENGTH = 500000; 
 
-                const canvas = document.createElement('canvas');
-                canvas.width = width;
-                canvas.height = height;
-                
-                const ctx = canvas.getContext('2d', { alpha: false });
+                const resizeAndCompress = (maxSize, quality) => {
+                    let width = img.width;
+                    let height = img.height;
 
-                if (ctx) {
-                    ctx.fillStyle = '#FFFFFF';
-                    ctx.fillRect(0, 0, width, height);
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
-                    ctx.drawImage(img, 0, 0, width, height);
+                    // Calcular nueva proporción solo si la imagen es más grande que el máximo
+                    if (width > maxSize || height > maxSize) {
+                        const scale = Math.min(maxSize / width, maxSize / height);
+                        width = Math.floor(width * scale);
+                        height = Math.floor(height * scale);
+                    }
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    const ctx = canvas.getContext('2d', { alpha: false });
+                    if (ctx) {
+                        ctx.fillStyle = '#FFFFFF'; // Fondo blanco por si hay transparencias
+                        ctx.fillRect(0, 0, width, height);
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'medium';
+                        ctx.drawImage(img, 0, 0, width, height);
+                    }
+                    
+                    // Usamos JPEG. Es universal y su compresión es predecible en todos los navegadores
+                    return canvas.toDataURL('image/jpeg', quality);
+                };
+
+                // 2. Primer intento de compresión
+                let base64String = resizeAndCompress(currentMaxSize, currentQuality);
+
+                // 3. Bucle de rescate agresivo
+                let attempts = 0;
+                while (base64String.length > TARGET_BASE64_LENGTH && attempts < 4) {
+                    console.log(`Intento ${attempts + 1}: Imagen aún grande (${base64String.length} chars). Achicando más...`);
+                    currentMaxSize = Math.floor(currentMaxSize * 0.7); // Reducir resolución un 30% extra
+                    currentQuality = currentQuality * 0.8; // Reducir calidad un 20% extra
+                    
+                    base64String = resizeAndCompress(currentMaxSize, currentQuality);
+                    attempts++;
                 }
 
-                // CAMBIO CLAVE: Usar image/webp en lugar de jpeg
-                // WebP a 0.7 es visualmente idéntico a un JPEG a 0.85 pero pesa la mitad.
-                messageInputValue = canvas.toDataURL('image/webp', 0.7); 
+                messageInputValue = base64String; 
                 
                 await sendMessage(true); 
                 
