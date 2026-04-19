@@ -354,6 +354,8 @@
             return;
         }
 
+        await autoEnterChat(code);
+
         chatId = code.toUpperCase();
 
         try {
@@ -606,6 +608,54 @@
             sendBtn.classList.add('disabled');
         } else {
             sendBtn.classList.remove('disabled');
+        }
+    }
+
+    // --- AUTO LOGIN DESDE URL ---
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        let codeFromUrl = params.get('code');
+
+        // soporte con hash (#)
+        if (!codeFromUrl && window.location.hash) {
+            codeFromUrl = window.location.hash.replace('#', '');
+        }
+
+        if (codeFromUrl) {
+            codeFromUrl = codeFromUrl.toUpperCase().trim();
+
+            chatCodeInput.value = codeFromUrl;
+            enterBtn.disabled = false;
+
+            autoEnterChat(codeFromUrl);
+        }
+    });
+
+    // Función reutilizable
+    async function autoEnterChat(code) {
+        chatId = code.toUpperCase();
+
+        try {
+            const res = await fetch(`${API}/api/chat/${chatId}`);
+            if (!res.ok) {
+                alert("Chat no encontrado");
+                return;
+            }
+
+            const chat = await res.json();
+            clientName = chat.clienteCode || "Cliente";
+
+            clientNameDisplay.textContent = clientName;
+            chatIdDisplay.textContent = chatId.substring(0, 8);
+
+            toggleScreens(true);
+
+            await loadMessages();
+            chatInterval = setInterval(() => loadMessages(), 3000);
+
+        } catch (error) {
+            console.error("Error cargando chat:", error);
+            alert("Error conectando al chat");
         }
     }
 
